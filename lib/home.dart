@@ -59,6 +59,13 @@ class _Homestate extends State<HomePage> {
         if (response.statusCode == 200) {
           print("berhasil");
           Get.offAllNamed("/login");
+          Get.snackbar(
+            'Sukses',
+            'Berhasil logout',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.white,
+          );
         }
       });
     } catch (error) {
@@ -83,6 +90,13 @@ class _Homestate extends State<HomePage> {
         if (response.statusCode == 200) {
           print("berhasil");
           Get.offAllNamed("/home");
+          Get.snackbar(
+            'Sukses',
+            'Buku berhasil di delete',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.white,
+          );
         }
       });
     } catch (error) {
@@ -157,7 +171,7 @@ class _Homestate extends State<HomePage> {
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              print('Edit button clicked for index $index');
+                              Get.to(editBookPage(idOper: books[index]['id']));
                             },
                           ),
                           IconButton(
@@ -168,7 +182,11 @@ class _Homestate extends State<HomePage> {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(detailBookPage(
+                          idOper: books[index]['id'],
+                        ));
+                      },
                     ),
                   );
                 },

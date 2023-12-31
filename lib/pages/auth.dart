@@ -8,5 +8,7 @@ import 'package:http/http.dart' as http;
 part 'login/loginPage.dart';
 part 'register/regisPage.dart';
 part 'addbook/addbook.dart';
+part 'editBook/editbook.dart';
+part 'detailbook/detailBook.dart';
 part '../main.dart';
 part '../home.dart';

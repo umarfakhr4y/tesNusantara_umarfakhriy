@@ -175,9 +175,12 @@ class _RegispageState extends State<Regispage> {
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10.0)),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.amber[300],
+                            ),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -221,9 +224,11 @@ class _RegispageState extends State<Regispage> {
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10.0)),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                            icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.amber[300]),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -242,6 +247,7 @@ class _RegispageState extends State<Regispage> {
                       SizedBox(height: displayHeight(context) * 0.03),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber[300],
                           padding: EdgeInsets.only(top: 12, bottom: 12),
                           // backgroundColor: ConstantColors.primaryColor,
                           shape: RoundedRectangleBorder(

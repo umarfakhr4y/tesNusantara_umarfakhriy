@@ -1,27 +1,60 @@
 part of '../auth.dart';
 
-class addBookPage extends StatefulWidget {
-  const addBookPage({super.key});
+class editBookPage extends StatefulWidget {
+  final int idOper;
+  const editBookPage({required this.idOper, super.key});
 
   @override
-  State<addBookPage> createState() => _addBookstate();
+  State<editBookPage> createState() => _editBookstate();
 }
 
-class _addBookstate extends State<addBookPage> {
+class _editBookstate extends State<editBookPage> {
   final Dio _dio = Dio();
   GetStorage storage = GetStorage();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _isbnController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
+  TextEditingController _isbnController = TextEditingController();
   TextEditingController _subtitleController = TextEditingController();
   TextEditingController _authorController = TextEditingController();
 
   void initState() {
     super.initState();
+    print(widget.idOper);
+    getBook();
   }
 
-  Future<void> addBook() async {
+  Future<void> getBook() async {
+    try {
+      var headers = {
+        'Authorization': "Bearer " + storage.read('token'),
+      };
+
+      var response = await _dio.get(
+        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/' +
+            widget.idOper.toString(),
+        options: Options(headers: headers),
+      );
+      // print('Response status: ${response.statusCode}');
+      // print('Response data: ${response.data}');
+      setState(() {
+        if (response.statusCode == 200) {
+          print("masuk 200");
+          print(response.data['title']);
+          setState(() {
+            _titleController.text = response.data['title'];
+            _isbnController.text = response.data['isbn'];
+            _subtitleController.text = response.data['subtitle'];
+            _authorController.text = response.data['author'];
+          });
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> editBook() async {
     try {
       var headers = {
         'Authorization': "Bearer " + storage.read('token'),
@@ -33,8 +66,8 @@ class _addBookstate extends State<addBookPage> {
         'author': _authorController.text,
         'subtitle': _subtitleController.text,
       };
-      var response = await _dio.post(
-        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/add',
+      var response = await _dio.put(
+        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/${widget.idOper}/edit',
         data: data,
         options: Options(headers: headers),
       );
@@ -45,7 +78,7 @@ class _addBookstate extends State<addBookPage> {
           Get.offAllNamed('/home');
           Get.snackbar(
             'Sukses',
-            'Buku Berhasil di tambahkan',
+            'Buku Berhasil di Edit',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
             colorText: Colors.white,
@@ -66,7 +99,7 @@ class _addBookstate extends State<addBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tambah Buku"),
+        title: Text("Edit Buku"),
         backgroundColor: Colors.amber[200],
       ),
       backgroundColor: Colors.amber[100],
@@ -242,10 +275,10 @@ class _addBookstate extends State<addBookPage> {
                             ),
                           ),
                           onPressed: () {
-                            addBook();
+                            editBook();
                           },
                           child: Text(
-                            'Add book',
+                            'Edit book',
                             style: TextStyle(
                                 fontSize: displayHeight(context) * 0.017),
                           ),

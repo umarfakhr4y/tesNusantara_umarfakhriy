@@ -34,6 +34,13 @@ class _LoginPageState extends State<LoginPage> {
           storage.write('token', response.data['token']);
           print(storage.read('token'));
           Get.offAllNamed("/home");
+          Get.snackbar(
+            'Sukses',
+            'Berhasil Login',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.white,
+          );
         }
       });
     } catch (error) {
@@ -130,9 +137,11 @@ class _LoginPageState extends State<LoginPage> {
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10.0)),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                            icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.amber[300]),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -148,20 +157,10 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
-                      GestureDetector(
-                        child: Text(
-                          "Lupa Password",
-                          style: TextStyle(
-                              // color: ConstantColors.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: displayHeight(context) * 0.017),
-                        ),
-                        onTap: () {},
-                      ),
                       SizedBox(height: displayHeight(context) * 0.03),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber[300],
                           padding: EdgeInsets.only(top: 12, bottom: 12),
                           // backgroundColor: ConstantColors.primaryColor,
                           shape: RoundedRectangleBorder(
